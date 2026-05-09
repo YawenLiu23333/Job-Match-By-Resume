@@ -1,5 +1,5 @@
 # test data_preprocessing
-from data_preprocessing import preprocess_text
+from back_end.src.data_preprocessing import preprocess_text
 
 sample_text = "I have experience in Python, SQL, and Machine Learning."
 
