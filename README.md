@@ -23,8 +23,13 @@ Backend:
 - sentence-transformers
 
 ## Run Backend
-python app.py
+```bash
+python back_end/app.py
+```
 
 ## Run Frontend
+```
 npm install
+cd frontend
 npm run dev
+```
