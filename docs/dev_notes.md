@@ -1,3 +1,9 @@
+To run backend:
+    python back_end/app.py
+To run frontend:
+    cd front end
+    npm run dev
+
 VS Code run button may use wrong interpreter.
     Use terminal:
     conda activate jobmatch2

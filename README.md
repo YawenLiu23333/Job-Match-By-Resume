@@ -23,8 +23,9 @@ Backend:
 - sentence-transformers
 
 ## Run Backend
-python app.py
+python back_end/app.py
 
 ## Run Frontend
 npm install
+cd frontend
 npm run dev
