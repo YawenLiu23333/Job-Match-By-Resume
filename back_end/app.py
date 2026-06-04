@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from src.pipeline import run_pipeline, DATA_DIR
 from src.resume_parser import extract_text_from_pdf
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/")
 def home():
