@@ -1,40 +1,43 @@
-import React, { useState } from 'react'
-import Home from './pages/Home'
-import Results from './pages/Results'
-import './App.css'
+import React, { useState } from "react";
+import Home from "./pages/Home";
+import Results from "./pages/Results";
+import "./App.css";
 
 function App() {
-  const [matchedJobs, setMatchedJobs] = useState(null)
+  const [matchedJobs, setMatchedJobs] = useState(null);
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const handleResumeTextSubmit = async (resumeInput) => {
-    const response = await fetch('/api/match', {
+    console.log("API URL:", import.meta.env.VITE_API_URL)
+    const response = await fetch(`${API_URL}/api/match`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ resume: resumeInput }),
-    })
+    });
 
-    const data = await response.json()
-    setMatchedJobs(data)
-  }
+    const data = await response.json();
+    setMatchedJobs(data);
+  };
 
   const handleResumeFileSubmit = async (file) => {
-    const formData = new FormData()
-    formData.append("resume_file", file)
+    console.log("API URL:", import.meta.env.VITE_API_URL)
+    const formData = new FormData();
+    formData.append("resume_file", file);
 
-    const response = await fetch('/api/match-pdf', {
+    const response = await fetch(`${API_URL}/api/match-pdf`, {
       method: "POST",
       body: formData,
     })
 
-    const data = await response.json()
-    setMatchedJobs(data)
-  }
+    const data = await response.json();
+    setMatchedJobs(data);
+  };
 
   const handleBack = () => {
-    setMatchedJobs(null)
-  }
+    setMatchedJobs(null);
+  };
 
   return (
     <>
@@ -47,7 +50,7 @@ function App() {
         />
       )}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
