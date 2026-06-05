@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import tempfile
+from pathlib import Path
 from src.pipeline import run_pipeline, DATA_DIR
 from src.resume_parser import extract_text_from_pdf
 
@@ -23,8 +25,9 @@ def resume_match():
 @app.route("/api/match-pdf", methods=["POST"])
 def resume_match_pdf():
     uploaded_file = request.files["resume_file"]
+    temp_dir = tempfile.gettempdir()
+    temp_path = Path(temp_dir)/ "uploaded_resume.pdf"
 
-    temp_path = DATA_DIR / "uploaded_resume.pdf"
     uploaded_file.save(temp_path)
 
     resume_text = extract_text_from_pdf(temp_path)
