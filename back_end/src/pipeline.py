@@ -2,7 +2,7 @@ import pandas as pd
 from .data_preprocessing import preprocess_text
 from .resume_parser import extract_text_from_pdf
 from .job_matcher import job_resume_similarity
-from .embedding_matcher import job_resume_semantic_matching
+# from .embedding_matcher import job_resume_semantic_matching
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parents[1]
@@ -46,12 +46,14 @@ def add_embedding_scores(df, processed_resume):
     return df
     # semantic_sorted_df = df.sort_values(by="embedding_score", ascending=False)
 
-def run_pipeline(resume_text):
+def run_pipeline(resume_text, include_embedding=False):
     # controls the whole flow
     df = load_data()
     processed_resume = process_resume(resume_text)
-    df = add_tfidf_scores(df, processed_resume) 
-    df = add_embedding_scores(df, processed_resume)
+    df = add_tfidf_scores(df, processed_resume)
+    if include_embedding:
+        #uncomment semnatic embedding at top
+        df = add_embedding_scores(df, processed_resume)
     return df
 
 # if __name__ == "__main__":
