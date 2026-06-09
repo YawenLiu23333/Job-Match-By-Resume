@@ -8,7 +8,6 @@ function App() {
   const API_URL = import.meta.env.VITE_API_URL;
 
   const handleResumeTextSubmit = async (resumeInput) => {
-    console.log("API URL:", import.meta.env.VITE_API_URL)
     const response = await fetch(`${API_URL}/api/match`, {
       method: "POST",
       headers: {
@@ -22,7 +21,6 @@ function App() {
   };
 
   const handleResumeFileSubmit = async (file) => {
-    console.log("API URL:", import.meta.env.VITE_API_URL)
     const formData = new FormData();
     formData.append("resume_file", file);
 
