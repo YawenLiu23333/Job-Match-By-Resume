@@ -1,5 +1,7 @@
 from openai import OpenAI
 import os
+import json
+import re
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -21,12 +23,14 @@ def generate_match_explanation(resume_text, job_description):
             {
                 "role": "user",
                 "content": f"""
-Compare this resume with this job description.
-
-Return:
-1. Why this job matches
-2. Missing skills
-3. Suggested resume keywords
+Compare this resume with this job description and return valid JSON only with the following content in 3 arrays:
+match_reasons: array of 2-3 concise bullets, missing_skills: array of 2-5 skills keywords, suggested_keywords: array of 5-8 resume keywords emphasized in job description but missing in resume.
+Return ONLY valid JSON.
+Do not include markdown.
+Do not include ```json.
+Do not include explanation outside JSON.
+Do not include additional explanation besides match_reasons, missing_skills, and suggested_keywords.
+make output less than 100 words. 
 
 Resume:
 {resume_text[:3000]}
@@ -36,9 +40,28 @@ Job Description:
 """
             }
         ],
-        max_tokens=500
+        max_tokens=400
     )
-    return completion.choices[0].message.content
+    content = completion.choices[0].message.content
+
+    content = content.replace("```json", "").replace("```", "").strip()
+
+    try:
+        data = json.loads(content)
+
+        if isinstance(data, list):
+            data = data[0]
+
+        return data
+        
+    except json.JSONDecodeError:
+        print("invalid JSON from model:")
+        print(content)
+        return {
+            "match_reasons": [content],
+            "missing_skills": [],
+            "suggested_keywords": []
+        }
 
 if __name__ == "__main__":
 
@@ -50,4 +73,4 @@ if __name__ == "__main__":
 
     res = generate_match_explanation(test_resume, test_job)
     print(res)
-# 
+ 

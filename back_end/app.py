@@ -50,9 +50,7 @@ def resume_match_explanation():
         resume_text, job_description
         )
 
-    return jsonify({
-        "explanation": explanation
-    })
+    return jsonify(explanation)
     
 if __name__ == "__main__":
     app.run(debug=True)
