@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import JobCard from '../component/JobCard'
 import JobDetail from '../component/JobDetail'
+import MatchExplanation from '../component/MatchExplanation'
 
-function Results({ matchedJobs, onBack }) {
+function Results({ matchedJobs, onBack, onExplanation, explanation, setExplanations, exLoading}) {
   const [selectedJobIndex, setSelectedJobIndex] = useState(null)
 
   const handleJobClick = (index) => {
+    setExplanations('')
+    
     selectedJobIndex === index
       ? setSelectedJobIndex(null)
       : setSelectedJobIndex(index)
@@ -36,11 +39,15 @@ function Results({ matchedJobs, onBack }) {
 
           return (
             <div key={actualIndex}>
-              <JobCard job={job} onClick={() => handleJobClick(actualIndex)} />
+              <JobCard job={job} onClick={() => handleJobClick(actualIndex)}/>
 
               {selectedJobIndex === actualIndex && (
-              <JobDetail job={job} />
+              <>
+              <JobDetail job={job} onExplanation={onExplanation} exLoading={exLoading} explanation={explanation}/>
+              </>
               )}
+              
+
             </div>
             )
           })}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-function Home({ onResumeTextSubmit, onResumeFileSubmit }) {
+function Home({ onResumeTextSubmit, onResumeFileSubmit, textLoading, fileLoading }) {
   const [resume, setResume] = useState("")
   const [file, setFile] = useState(null)
 
@@ -41,9 +41,14 @@ function Home({ onResumeTextSubmit, onResumeFileSubmit }) {
               onChange={(event) => setFile(event.target.files[0])}
             />
 
-            <button className="primary-button" onClick={handleFileSubmit}>
-              Upload & Match Jobs
+            <button className="primary-button" onClick={handleFileSubmit} disabled={fileLoading}>
+              {fileLoading? "Finding Matches...":"Upload & Match Jobs"}
             </button>
+            {fileLoading && (
+              <p className="loading-message">
+                Analyzing your resume and ranking jobs. This may take a few seconds on the first request.
+              </p>
+            )}
           </div>
 
           <div className="input-card">
@@ -56,10 +61,16 @@ function Home({ onResumeTextSubmit, onResumeFileSubmit }) {
                 placeholder="Paste your resume here..."
                 onChange={(event) => setResume(event.target.value)}
               />
-
-              <button className="primary-button" type="submit">
-                Find Matches
+              
+              <button className="primary-button" type="submit" disabled={textLoading}>
+                {textLoading? "Finding Matches...": "Find Matches"}
               </button>
+            
+              {textLoading && (
+                <p className="loading-message">
+                  Analyzing your resume and ranking jobs. This may take a few seconds on the first request.
+                </p>)}
+
             </form>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import React from 'react'
+import MatchExplanation from './MatchExplanation';
 
-function JobDetail({ job }) {
+function JobDetail({ job, onExplanation, exLoading, explanation}) {
   return (
     <div className="job-detail">
       <h3>Job Details</h3>
@@ -18,6 +19,11 @@ function JobDetail({ job }) {
           <strong>Semantic Similarity Score:</strong> {(Number(job.embedding_score) * 100).toFixed(1)}%
         </p>
       )}
+
+      <button className="ai-button" onClick={() => onExplanation(job.description)}>
+        {exLoading? "Generating AI analysis...":"Show AI-powered explanation"}
+      </button>
+      {explanation && <MatchExplanation explanation={explanation}/>}
 
       <div className="score-explanation">
         TF-IDF emphasizes keyword overlap between your resume and the job description.
