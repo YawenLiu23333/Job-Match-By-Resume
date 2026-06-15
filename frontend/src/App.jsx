@@ -39,7 +39,8 @@ function App() {
     })
 
     const data = await response.json();
-    setMatchedJobs(data);
+    setMatchedJobs(data.results);
+    setResume(data.resume_text);
     setFileLoading(false);
   };
 
