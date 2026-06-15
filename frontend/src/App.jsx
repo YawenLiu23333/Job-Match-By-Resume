@@ -39,7 +39,7 @@ function App() {
     })
 
     const data = await response.json();
-    setMatchedJobs(data.results);
+    setMatchedJobs(data.jobs);
     setResume(data.resume_text);
     setFileLoading(false);
   };
