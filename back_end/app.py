@@ -36,7 +36,9 @@ def resume_match_pdf():
     results_df = run_pipeline(resume_text, include_embedding=False)
     results = results_df.to_dict(orient="records")
 
-    return jsonify(results)
+    return jsonify({
+        "jobs": results,
+        "resume_text": resume_text})
 
 @app.route("/api/match/explanation", methods=["POST"])
 def resume_match_explanation():
